@@ -20,7 +20,7 @@ const TaskDropdown: React.FC<TaskDropdownProps> = ({ task, onStatusChange }) => 
     switch (status) {
       case 'Todo':
         return 'bg-gradient-to-r from-red-400 to-red-600';
-      case 'In Progress':
+      case 'inProgress':
         return 'bg-gradient-to-r from-yellow-400 to-yellow-600';
       case 'Completed':
         return 'bg-gradient-to-r from-green-400 to-green-600';
@@ -36,7 +36,7 @@ const TaskDropdown: React.FC<TaskDropdownProps> = ({ task, onStatusChange }) => 
       className={`p-2 border border-gray-300 rounded text-white font-semibold ${getGradientClass(status)}`}
     >
       <option value="Todo" className={getGradientClass('Todo')}>To Do</option>
-      <option value="In Progress" className={getGradientClass('In Progress')}>In Progress</option>
+      <option value="In Progress" className={getGradientClass('inProgress')}>In Progress</option>
       <option value="Completed" className={getGradientClass('Completed')}>Completed</option>
     </select>
   );
