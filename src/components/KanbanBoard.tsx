@@ -3,11 +3,13 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Task, useTasks } from '../context/TaskContext';
 
 interface KanbanBoardProps {
+  tasks: Task[];
   onEditTask: (task: Task) => void;
+  onUpdateTask: (task: Task) => void;
 }
 
-const KanbanBoard: React.FC<KanbanBoardProps> = ({ onEditTask }) => {
-  const { tasks, updateTask } = useTasks(); // Use tasks from context
+const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onEditTask, onUpdateTask }) => {
+  const { updateTask } = useTasks();
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -18,7 +20,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ onEditTask }) => {
     if (task && source.droppableId !== destination.droppableId) {
       const updatedTask = {
         ...task,
-        status: destination.droppableId as 'Todo' | 'inProgress' | 'Completed',
+        status: destination.droppableId as 'Todo' | 'inProgress' | 'Completed'
       };
       updateTask(updatedTask);
     }
@@ -35,16 +37,10 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ onEditTask }) => {
       <div className="flex flex-col md:flex-row flex-wrap -mx-2">
         {Object.entries(columns).map(([status, columnTasks]) => (
           <div key={status} className="w-full md:w-1/2 lg:w-1/3 px-2 mb-4">
-            <h2 className="text-xl font-bold mb-2 capitalize">
-              {status.replace(/([A-Z])/g, ' $1').trim()}
-            </h2>
+            <h2 className="text-xl font-bold mb-2 capitalize">{status.replace(/([A-Z])/g, ' $1').trim()}</h2>
             <Droppable droppableId={status}>
               {(provided) => (
-                <ul
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  className="bg-gradient-to-br from-purple-100 to-pink-100 p-2 rounded-lg min-h-[200px] transition-all duration-300 border-2 border-transparent hover:border-purple-300 focus-within:border-purple-400"
-                >
+                <ul {...provided.droppableProps} ref={provided.innerRef} className="bg-gradient-to-br from-purple-100 to-pink-100 p-2 rounded-lg min-h-[200px] transition-all duration-300 border-2 border-transparent hover:border-purple-300 focus-within:border-purple-400">
                   {columnTasks.map((task, index) => (
                     <Draggable key={task.id} draggableId={task.id} index={index}>
                       {(provided) => (
