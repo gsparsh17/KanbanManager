@@ -1,10 +1,9 @@
-// src/components/TaskForm.tsx
 "use client";
 
 import React, { useState } from "react";
 import { Task } from "../types/task";
 import { useTasks } from "../context/TaskContext";
-import Modal from './Modal';
+import Modal from "./Modal";
 
 interface TaskFormProps {
   task?: Task | null;
@@ -16,8 +15,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
 
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
-  const [status, setStatus] = useState<Task['status']>(task?.status || "To Do");
-  const [priority, setPriority] = useState<Task['priority']>(task?.priority || "Medium");
+  const [status, setStatus] = useState<Task["status"]>(task?.status || "To Do");
+  const [priority, setPriority] = useState<Task["priority"]>(task?.priority || "Medium");
   const [dueDate, setDueDate] = useState(task?.dueDate || "");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,26 +30,25 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
       priority,
       dueDate,
     };
-    console.log(newTask)
 
     if (task) {
       updateTask({
         ...newTask,
-        status: newTask.status === 'To Do' ? 'todo' :
-                newTask.status === 'In Progress' ? 'inProgress' :
-                'completed',
-        description: newTask.description || '',  // Ensure description is never undefined
-        dueDate: newTask.dueDate || '',  // Ensure dueDate is never undefined
+        status: newTask.status === "To Do" ? "To Do" :
+                newTask.status === "In Progress" ? "In Progress" :
+                "Completed",
+        description: newTask.description || "",
+        dueDate: newTask.dueDate || "",
       });
     } else {
       const { id, ...taskWithoutId } = newTask;
       addTask({
         ...taskWithoutId,
-        status: newTask.status === 'To Do' ? 'todo' :
-                newTask.status === 'In Progress' ? 'inProgress' :
-                'completed',
-        description: newTask.description || '',  // Ensure description is never undefined
-        dueDate: newTask.dueDate || '',  // Ensure dueDate is never undefined
+        status: newTask.status === "To Do" ? "To Do" :
+                newTask.status === "In Progress" ? "In Progress" :
+                "Completed",
+        description: newTask.description || "",
+        dueDate: newTask.dueDate || "",
       });
     }
 
@@ -61,36 +59,38 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
     onClose();
   };
 
-  const getStatusGradient = (status: Task['status']) => {
+  const getStatusGradient = (status: Task["status"]) => {
     switch (status) {
-      case 'To Do':
-        return 'from-indigo-400 to-blue-600';
-      case 'In Progress':
-        return 'from-amber-400 to-orange-600';
-      case 'Completed':
-        return 'from-emerald-400 to-green-600';
+      case "To Do":
+        return "from-indigo-400 to-blue-600";
+      case "In Progress":
+        return "from-amber-400 to-orange-600";
+      case "Completed":
+        return "from-emerald-400 to-green-600";
       default:
-        return 'from-gray-400 to-gray-600';
+        return "from-gray-400 to-gray-600";
     }
   };
 
-  const getPriorityGradient = (priority: Task['priority']) => {
+  const getPriorityGradient = (priority: Task["priority"]) => {
     switch (priority) {
-      case 'Low':
-        return 'from-teal-400 to-cyan-600';
-      case 'Medium':
-        return 'from-amber-400 to-orange-600';
-      case 'High':
-        return 'from-rose-400 to-red-600';
+      case "Low":
+        return "from-teal-400 to-cyan-600";
+      case "Medium":
+        return "from-amber-400 to-orange-600";
+      case "High":
+        return "from-rose-400 to-red-600";
       default:
-        return 'from-gray-400 to-gray-600';
+        return "from-gray-400 to-gray-600";
     }
   };
 
   return (
     <Modal onClose={onClose}>
       <div className="p-6 bg-gradient-to-br from-violet-100 to-fuchsia-100">
-        <h2 className="text-2xl font-bold mb-4 text-indigo-800">{task ? "Edit Task" : "Create a New Task"}</h2>
+        <h2 className="text-2xl font-bold mb-4 text-indigo-800">
+          {task ? "Edit Task" : "Create a New Task"}
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-indigo-700">
@@ -123,7 +123,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
             <select
               id="status"
               value={status}
-              onChange={(e) => setStatus(e.target.value as Task['status'])}
+              onChange={(e) => setStatus(e.target.value as Task["status"])}
               className={`mt-1 w-full p-2 border border-indigo-300 rounded text-white font-semibold bg-gradient-to-r ${getStatusGradient(status)} focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200`}
             >
               <option value="todo">To Do</option>
