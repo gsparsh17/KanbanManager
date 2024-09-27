@@ -89,27 +89,27 @@ const TaskListPage = () => {
   }
   };
 
-  const handleDeleteTask = async (id: string) => {
-    try {
-      const response = await fetch(`http://localhost:5000/tasks/${id}`, {
-        method: 'DELETE',
-      });
+  // const handleDeleteTask = async (id: string) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+  //       method: 'DELETE',
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Failed to delete task');
-      }
-    deleteTask(id);
-    toast.success('Task deleted successfully!', {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
-  } catch (error) {
-  }
-  };
+  //     if (!response.ok) {
+  //       throw new Error('Failed to delete task');
+  //     }
+  //   deleteTask(id);
+  //   toast.success('Task deleted successfully!', {
+  //     position: "top-right",
+  //     autoClose: 3000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //   });
+  // } catch (error) {
+  // }
+  // };
 
   const handleEditTask = (task: Task) => {
     setEditingTask(task);

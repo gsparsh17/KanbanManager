@@ -6,7 +6,7 @@ import TaskListPage from './tasks/page';  // Import your TaskListPage component
 import KanbanBoard from '../components/KanbanBoard';  // Import your KanbanBoard component
 
 export default function Home() {
-  const [view, setView] = useState<'taskList' | 'kanban'>('taskList');  // State to switch between views
+  const [view] = useState<'taskList' | 'kanban'>('taskList');  // State to switch between views
   const [isAuthenticated, setIsAuthenticated] = useState(false);  // State to track authentication
   const router = useRouter();  // Next.js router for redirection
 
