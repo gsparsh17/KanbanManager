@@ -8,7 +8,7 @@ export interface Task {
   title: string;
   description: string;
   priority: string;
-  status: 'todo' | 'inProgress' | 'completed';
+  status: 'Todo' | 'inProgress' | 'Completed';
   dueDate: string;
 }
 

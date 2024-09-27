@@ -15,7 +15,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
 
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
-  const [status, setStatus] = useState<Task["status"]>(task?.status || "To Do");
+  const [status, setStatus] = useState<Task["status"]>(task?.status || "Todo");
   const [priority, setPriority] = useState<Task["priority"]>(task?.priority || "Medium");
   const [dueDate, setDueDate] = useState(task?.dueDate || "");
 
@@ -34,7 +34,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
     if (task) {
       updateTask({
         ...newTask,
-        status: newTask.status === "To Do" ? "To Do" :
+        status: newTask.status === "Todo" ? "Todo" :
                 newTask.status === "In Progress" ? "In Progress" :
                 "Completed",
         description: newTask.description || "",
@@ -44,7 +44,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
       const { id, ...taskWithoutId } = newTask;
       addTask({
         ...taskWithoutId,
-        status: newTask.status === "To Do" ? "To Do" :
+        status: newTask.status === "Todo" ? "Todo" :
                 newTask.status === "In Progress" ? "In Progress" :
                 "Completed",
         description: newTask.description || "",
@@ -61,7 +61,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
 
   const getStatusGradient = (status: Task["status"]) => {
     switch (status) {
-      case "To Do":
+      case "Todo":
         return "from-indigo-400 to-blue-600";
       case "In Progress":
         return "from-amber-400 to-orange-600";
@@ -126,7 +126,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
               onChange={(e) => setStatus(e.target.value as Task["status"])}
               className={`mt-1 w-full p-2 border border-indigo-300 rounded text-white font-semibold bg-gradient-to-r ${getStatusGradient(status)} focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200`}
             >
-              <option value="todo">To Do</option>
+              <option value="Todo">To Do</option>
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
             </select>
