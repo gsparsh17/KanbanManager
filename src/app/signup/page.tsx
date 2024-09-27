@@ -21,7 +21,7 @@ export default function SignupPage() {
 
     try {
       // Send signup request to backend
-      const res = await fetch('http://localhost:5000/signup', {
+      const res = await fetch('https://task-backend-mocha-chi.vercel.app/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
