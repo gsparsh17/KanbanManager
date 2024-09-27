@@ -35,7 +35,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
       updateTask({
         ...newTask,
         status: newTask.status === "Todo" ? "Todo" :
-                newTask.status === "In Progress" ? "In Progress" :
+                newTask.status === "inProgress" ? "inProgress" :
                 "Completed",
         description: newTask.description || "",
         dueDate: newTask.dueDate || "",
@@ -45,7 +45,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
       addTask({
         ...taskWithoutId,
         status: newTask.status === "Todo" ? "Todo" :
-                newTask.status === "In Progress" ? "In Progress" :
+                newTask.status === "inProgress" ? "inProgress" :
                 "Completed",
         description: newTask.description || "",
         dueDate: newTask.dueDate || "",
@@ -63,7 +63,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
     switch (status) {
       case "Todo":
         return "from-indigo-400 to-blue-600";
-      case "In Progress":
+      case "inProgress":
         return "from-amber-400 to-orange-600";
       case "Completed":
         return "from-emerald-400 to-green-600";
@@ -127,7 +127,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
               className={`mt-1 w-full p-2 border border-indigo-300 rounded text-white font-semibold bg-gradient-to-r ${getStatusGradient(status)} focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200`}
             >
               <option value="Todo">To Do</option>
-              <option value="In Progress">In Progress</option>
+              <option value="inProgress">In Progress</option>
               <option value="Completed">Completed</option>
             </select>
           </div>

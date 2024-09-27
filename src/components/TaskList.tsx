@@ -53,13 +53,13 @@ const TaskList: React.FC<TaskListProps> = ({ onEditTask }) => {
             <p className="text-sm text-pink-600">Due Date: {task.dueDate}</p>
             <div className="mt-2 space-x-2">
               <button
-                onClick={() => onEditTask({ ...task, status: task.status === 'todo' ? 'To Do' : task.status === 'inProgress' ? 'In Progress' : 'Completed', priority: task.priority })}
+                onClick={() => onEditTask({ ...task, status: task.status === 'Todo' ? 'Todo' : task.status === 'inProgress' ? 'inProgress' : 'Completed', priority: task.priority })}
                 className="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-1 px-2 rounded transition-all duration-300"
               >
                 Edit
               </button>
               <button
-                onClick={() => updateTask({ ...task, status: 'completed' })}
+                onClick={() => updateTask({ ...task, status: 'Completed' })}
                 className="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold py-1 px-2 rounded transition-all duration-300"
               >
                 Complete
