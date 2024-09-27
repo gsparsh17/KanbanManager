@@ -7,7 +7,7 @@ import Modal from "./Modal";
 
 interface TaskFormProps {
   task?: Task | null;
-  onSubmit: () => void;
+  onSubmit: (task: Task) => Promise<void>;
   onClose: () => void;
 }
 
