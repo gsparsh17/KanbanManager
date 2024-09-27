@@ -7,6 +7,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
+  priority: string;
   status: 'todo' | 'inProgress' | 'completed';
   dueDate: string;
 }
@@ -26,17 +27,75 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const addTask = (task: Omit<Task, 'id'>) => {
-    const newTask = { ...task, id: uuidv4() };
-    setTasks([...tasks, newTask]);
+  const addTask = async (task: Omit<Task, 'id'>) => {
+    try {
+      const response = await fetch('http://localhost:5000/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: uuidv4,
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add task');
+      }
+
+      const newTask = await response.json(); // Assuming the server returns the created task
+      setTasks([...tasks, newTask]);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const updateTask = (updatedTask: Task) => {
-    setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+  const updateTask = async (task: Task) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update task');
+      }
+
+      const updatedTask = await response.json(); // Assuming the server returns the updated task
+      setTasks(tasks.map(t => t.id === updatedTask.id ? updatedTask : t));
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const deleteTask = (id: string) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const deleteTask = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete task');
+      }
+
+      setTasks(tasks.filter(task => task.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (

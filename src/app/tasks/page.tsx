@@ -21,7 +21,26 @@ const TaskListPage = () => {
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
 
-  const handleAddTask = (task: Omit<Task, 'id'>) => {
+  const handleAddTask = async (task: Omit<Task, 'id'>) => {
+    try {
+      const response = await fetch('http://localhost:5000/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate,
+      }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add task');
+      }
+      console.log(task)
     addTask(task);
     setIsFormVisible(false);
     console.log('Adding task'); // Add this line
@@ -33,9 +52,28 @@ const TaskListPage = () => {
       pauseOnHover: true,
       draggable: true,
     });
+  }catch{}
   };
 
-  const handleUpdateTask = (task: Task) => {
+  const handleUpdateTask = async (task: Task) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate,
+      }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update task');
+      }
     updateTask(task);
     setIsFormVisible(false);
     setEditingTask(null);
@@ -47,9 +85,19 @@ const TaskListPage = () => {
       pauseOnHover: true,
       draggable: true,
     });
+  } catch (error) {
+  }
   };
 
-  const handleDeleteTask = (id: string) => {
+  const handleDeleteTask = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete task');
+      }
     deleteTask(id);
     toast.success('Task deleted successfully!', {
       position: "top-right",
@@ -59,6 +107,8 @@ const TaskListPage = () => {
       pauseOnHover: true,
       draggable: true,
     });
+  } catch (error) {
+  }
   };
 
   const handleEditTask = (task: Task) => {
@@ -91,7 +141,7 @@ const TaskListPage = () => {
     }`}>
       <div className="p-4 md:p-6 lg:p-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h1 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4 md:mb-0 animate-fade-in-down bg-clip-text text-transparent ${
+          <h1 className={`text-3xl md:text-3xl lg:text-4xl font-extrabold text-center mb-4 md:mb-0 animate-fade-in-down bg-clip-text text-transparent ${
             theme === 'dark'
               ? 'bg-gradient-to-r from-purple-400 to-pink-600'
               : 'bg-gradient-to-r from-purple-600 to-blue-600'
@@ -196,8 +246,8 @@ const TaskListPage = () => {
                   setIsFormVisible(false);
                   setEditingTask(null);
                 }}
-               // onSubmit={editingTask ? handleUpdateTask : handleAddTask}
-               // task={editingTask ? { ...editingTask, priority: editingTask.priority ?? 'Medium' } : null}
+               onSubmit={editingTask ? handleUpdateTask : handleAddTask}
+               task={editingTask ? { ...editingTask, priority: editingTask.priority ?? 'Medium' } : null}
               />
             </div>
           </div>
@@ -208,7 +258,7 @@ const TaskListPage = () => {
             ? 'bg-gradient-to-br from-gray-800 via-indigo-900 to-purple-900'
             : 'bg-gradient-to-br from-violet-400 to-pink-200'
         }`}>
-         // {activeView === 'list' ? (
+         {activeView === 'list' ? (
             <TaskList onEditTask={handleEditTask} />
           ) : (
             <KanbanBoard 

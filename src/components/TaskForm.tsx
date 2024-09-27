@@ -31,6 +31,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
       priority,
       dueDate,
     };
+    console.log(newTask)
 
     if (task) {
       updateTask({
