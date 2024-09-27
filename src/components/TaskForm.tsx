@@ -7,7 +7,7 @@ import Modal from "./Modal";
 
 interface TaskFormProps {
   task?: Task | null;
-  onSubmit: (task: Omit<Task, 'id'>) => void;
+  onSubmit: () => void;
   onClose: () => void;
 }
 
