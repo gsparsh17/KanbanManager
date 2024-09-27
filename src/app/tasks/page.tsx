@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import TaskForm from '../../components/TaskForm';
-import { useTasks, Task } from '../../context/TaskContext';
+import { useTasks } from '../../context/TaskContext';
+import { Task } from '../../types/task';
 import KanbanBoard from '../../components/KanbanBoard';
 import TaskList from '../../components/TaskList';
 import { useTheme } from 'next-themes';

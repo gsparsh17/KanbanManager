@@ -7,11 +7,11 @@ import Modal from "./Modal";
 
 interface TaskFormProps {
   task?: Task | null;
-  onSubmit: (task: Task) => Promise<void>;
   onClose: () => void;
+  onSubmit: (task: Task) => Promise<void>;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose, onSubmit }) => {
   const { addTask, updateTask } = useTasks();
 
   const [title, setTitle] = useState(task?.title || "");
@@ -23,8 +23,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newTask: Task = {
-      id: task ? task.id : Date.now().toString(),
+    const newTask= {
+      id: task ? task.id : "",
       title,
       description,
       status,
@@ -35,6 +35,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
     if (task) {
       updateTask({
         ...newTask,
+        id: task.id,
         status: newTask.status === "Todo" ? "Todo" :
                 newTask.status === "inProgress" ? "inProgress" :
                 "Completed",
@@ -42,9 +43,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
         dueDate: newTask.dueDate || "",
       });
     } else {
-      const { id, ...taskWithoutId } = newTask;
       addTask({
-        ...taskWithoutId,
+        ...newTask,
         status: newTask.status === "Todo" ? "Todo" :
                 newTask.status === "inProgress" ? "inProgress" :
                 "Completed",
@@ -52,7 +52,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task = null, onClose }) => {
         dueDate: newTask.dueDate || "",
       });
     }
-
+    onSubmit(newTask);
     onClose();
   };
 

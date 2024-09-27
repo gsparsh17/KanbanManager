@@ -1,6 +1,7 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Task, useTasks } from '../context/TaskContext';
+import { useTasks } from '../context/TaskContext';
+import { Task } from '../types/task';
 
 interface KanbanBoardProps {
   tasks: Task[];

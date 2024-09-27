@@ -17,7 +17,9 @@ const TaskList: React.FC<TaskListProps> = ({ onEditTask }) => {
 
   const sortedTasks = [...filteredTasks].sort((a, b) => {
     if (sortBy === 'dueDate') {
-      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+      const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+      const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+      return dateA - dateB;
     }
     return a.title.localeCompare(b.title);
   });
@@ -31,9 +33,9 @@ const TaskList: React.FC<TaskListProps> = ({ onEditTask }) => {
           className="mr-2 mb-2 p-2 border rounded"
         >
           <option value="all">All</option>
-          <option value="todo">To Do</option>
+          <option value="Todo">To Do</option>
           <option value="inProgress">In Progress</option>
-          <option value="completed">Completed</option>
+          <option value="Completed">Completed</option>
         </select>
         <select
           value={sortBy}
@@ -53,7 +55,7 @@ const TaskList: React.FC<TaskListProps> = ({ onEditTask }) => {
             <p className="text-sm text-pink-600">Due Date: {task.dueDate}</p>
             <div className="mt-2 space-x-2">
               <button
-                onClick={() => onEditTask({ ...task, status: task.status === 'Todo' ? 'Todo' : task.status === 'inProgress' ? 'inProgress' : 'Completed', priority: task.priority })}
+                onClick={() => onEditTask({ ...task })}
                 className="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-1 px-2 rounded transition-all duration-300"
               >
                 Edit
