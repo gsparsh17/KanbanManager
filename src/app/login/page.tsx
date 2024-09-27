@@ -63,7 +63,7 @@ export default function LoginPage() {
             <p className="font-bold text-lg mb-2">Error</p>
             <p>{error}</p>
             <button 
-              onClick={() => setError(null)}
+              onClick={() => setError("")}
               className="absolute top-0 right-0 mt-4 mr-4 text-red-500 hover:text-red-700 transition-colors duration-200"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
