@@ -21,7 +21,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const addTask = async (task: Omit<Task, 'id'>) => {
         try {
-            const response = await fetch('http://localhost:5000/tasks', {
+            const response = await fetch('https://taskbackend-dv7e.onrender.com/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const updateTask = async (task: Task) => {
         try {
-            const response = await fetch(`http://localhost:5000/tasks/${task.id}`, {
+            const response = await fetch(`https://taskbackend-dv7e.onrender.com/tasks/${task.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const deleteTask = async (id: string) => {
         try {
-            const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+            const response = await fetch(`https://taskbackend-dv7e.onrender.com/tasks/${id}`, {
                 method: 'DELETE',
             });
 
