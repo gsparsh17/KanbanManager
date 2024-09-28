@@ -16,12 +16,13 @@ export default function LoginPage() {
 
     try {
       // Send login request to backend
-      const res = await fetch('https://task-backend-mocha-chi.vercel.app/login', {
+      const res = await fetch('https://taskbackend-dv7e.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
       });
 
       const data = await res.json();
